@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #f97316;
+  --color-line: #e5e7eb;
+  --color-surface: #f9fafb;
+  --color-muted: #6b7280;
+  --font-heading: Arial, Helvetica, sans-serif;
+}

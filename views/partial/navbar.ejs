@@ -1,0 +1,105 @@
+<%
+  const currentUser = typeof user !== "undefined" ? user : null;
+  const count = typeof cartCount !== "undefined" ? cartCount : 0;
+%>
+
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-line">
+  <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
+
+    <!-- Logo -->
+    <a href="/" class="font-heading font-bold text-xl tracking-tight shrink-0">
+      URBAN<span class="text-brand">SOLES</span>
+    </a>
+
+    <!-- Desktop links -->
+    <ul class="hidden md:flex items-center gap-8 text-sm font-medium h-16">
+      <li class="h-16 flex items-center"><a href="/" class="hover:text-brand">Home</a></li>
+
+      <!-- Shop dropdown -->
+      <li class="relative group h-16 flex items-center">
+        <a href="/shop" class="flex items-center gap-1 hover:text-brand">
+          Shop
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </a>
+        <div class="absolute left-0 top-full hidden group-hover:block group-focus-within:block w-52 bg-white border border-line rounded-xl shadow-lg p-2">
+          <a href="/shop" class="block px-3 py-2 rounded-lg hover:bg-surface hover:text-brand">All Sneakers</a>
+          <a href="/shop?category=Men" class="block px-3 py-2 rounded-lg hover:bg-surface hover:text-brand">Men</a>
+          <a href="/shop?category=Women" class="block px-3 py-2 rounded-lg hover:bg-surface hover:text-brand">Women</a>
+          <a href="/shop?category=Sports" class="block px-3 py-2 rounded-lg hover:bg-surface hover:text-brand">Sports</a>
+          <a href="/shop?category=Casual" class="block px-3 py-2 rounded-lg hover:bg-surface hover:text-brand">Casual</a>
+        </div>
+      </li>
+
+      <li class="h-16 flex items-center"><a href="/shop?sort=new" class="hover:text-brand">New Arrivals</a></li>
+      <li class="h-16 flex items-center"><a href="/contact" class="hover:text-brand">Contact</a></li>
+    </ul>
+
+    <!-- Right side -->
+    <div class="flex items-center gap-3 text-sm font-medium">
+
+      <!-- Search (desktop) -->
+      <form action="/shop" method="GET" class="hidden lg:block">
+        <input type="text" name="search" placeholder="Search sneakers..."
+               class="w-48 border border-line rounded-full px-4 py-2 text-sm focus:outline-none focus:border-brand" />
+      </form>
+
+      <!-- Account dropdown (desktop) -->
+      <div class="relative group h-16 hidden md:flex items-center">
+        <button class="flex items-center gap-1 hover:text-brand" aria-label="Account">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+          <% if (currentUser) { %><span class="max-w-[90px] truncate"><%= currentUser.name %></span><% } %>
+        </button>
+        <div class="absolute right-0 top-full hidden group-hover:block group-focus-within:block w-48 bg-white border border-line rounded-xl shadow-lg p-2">
+          <% if (!currentUser) { %>
+            <a href="/login" class="block px-3 py-2 rounded-lg hover:bg-surface hover:text-brand">Login</a>
+            <a href="/signup" class="block px-3 py-2 rounded-lg hover:bg-surface hover:text-brand">Sign Up</a>
+          <% } else { %>
+            <% if (currentUser.role === "admin") { %>
+              <a href="/admin" class="block px-3 py-2 rounded-lg hover:bg-surface hover:text-brand">Admin Dashboard</a>
+            <% } %>
+            <a href="/my-orders" class="block px-3 py-2 rounded-lg hover:bg-surface hover:text-brand">My Orders</a>
+            <form action="/logout" method="POST">
+              <button type="submit" class="w-full text-left px-3 py-2 rounded-lg hover:bg-surface hover:text-brand">Logout</button>
+            </form>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- Cart -->
+      <a href="/cart" class="relative flex items-center" aria-label="Cart">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 4h2l2.4 11h10.2L20 7H6"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/></svg>
+        <span class="absolute -top-2 -right-2 bg-brand text-white text-xs font-semibold w-5 h-5 rounded-full flex items-center justify-center"><%= count %></span>
+      </a>
+
+      <!-- Hamburger (mobile) -->
+      <button id="menu-btn" class="md:hidden" aria-label="Menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-line bg-white px-4 py-4 space-y-1 text-sm font-medium">
+    <form action="/shop" method="GET" class="mb-3">
+      <input type="text" name="search" placeholder="Search sneakers..."
+             class="w-full border border-line rounded-full px-4 py-2 focus:outline-none focus:border-brand" />
+    </form>
+    <a href="/" class="block py-2">Home</a>
+    <a href="/shop" class="block py-2">Shop</a>
+    <a href="/shop?category=Men" class="block py-2 pl-4 text-muted">Men</a>
+    <a href="/shop?category=Women" class="block py-2 pl-4 text-muted">Women</a>
+    <a href="/shop?category=Sports" class="block py-2 pl-4 text-muted">Sports</a>
+    <a href="/shop?category=Casual" class="block py-2 pl-4 text-muted">Casual</a>
+    <a href="/shop?sort=new" class="block py-2">New Arrivals</a>
+    <a href="/contact" class="block py-2">Contact</a>
+    <hr class="border-line my-2" />
+    <% if (!currentUser) { %>
+      <a href="/login" class="block py-2">Login</a>
+      <a href="/signup" class="block py-2">Sign Up</a>
+    <% } else { %>
+      <% if (currentUser.role === "admin") { %><a href="/admin" class="block py-2">Admin Dashboard</a><% } %>
+      <a href="/my-orders" class="block py-2">My Orders</a>
+      <form action="/logout" method="POST"><button type="submit" class="py-2">Logout</button></form>
+    <% } %>
+  </div>
+</header>
