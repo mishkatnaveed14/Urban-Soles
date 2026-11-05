@@ -11,7 +11,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero({ products, addToCart }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [selectedSize, setSelectedSize] = useState(products[0]?.sizes[0] ?? null);
+  const [selectedSize, setSelectedSize] = useState(
+    products[0]?.sizes.includes(42) ? 42 : (products[0]?.sizes[0] ?? null)
+  );
 
   const product = products[activeIndex];
 
