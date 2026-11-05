@@ -138,6 +138,11 @@ function renderCart() {
   document.querySelectorAll("[data-checkout-submit]").forEach((button) => {
     button.disabled = cart.length === 0;
   });
+  document.querySelectorAll("[data-cart-checkout]").forEach((link) => {
+    link.setAttribute("aria-disabled", String(cart.length === 0));
+    link.tabIndex = cart.length === 0 ? -1 : 0;
+  });
+  setText("[data-cart-page-count-label]", itemCount === 1 ? "item" : "items");
 }
 
 function announceProductAdded(form) {
@@ -159,6 +164,12 @@ export function initializeStorefront() {
 
   document.addEventListener("click", (event) => {
     if (!(event.target instanceof Element)) return;
+
+    const checkoutLink = event.target.closest("[data-cart-checkout]");
+    if (checkoutLink && readCart().length === 0) {
+      event.preventDefault();
+      return;
+    }
 
     const addButton = event.target.closest("[data-product-add]");
     if (addButton) {

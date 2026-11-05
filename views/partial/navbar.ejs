@@ -11,7 +11,7 @@
         { title: "Shoes", links: [["Running", "/shop?category=Men&type=running"], ["Sneakers", "/shop?category=Men&type=sneakers"], ["Casual", "/shop?category=Men&type=casual"], ["Boots", "/shop?category=Men&type=boots"]] },
         { title: "Shop by", links: [["New In", "/shop?category=Men&sort=new"], ["Best Sellers", "/shop?category=Men&sort=popular"], ["Under Rs. 8,000", "/shop?category=Men&max=8000"]] },
       ],
-      feature: { img: "https://picsum.photos/seed/men-feature/500/600", title: "Velocity Pro Edition", sub: "20% Off this week", href: "/shop?category=Men" },
+      feature: { img: "/models/sneaker-model-1.jpg", title: "Velocity Pro Edition", sub: "20% Off this week", href: "/shop?category=Men" },
     },
     {
       key: "women", label: "Women", href: "/shop?category=Women",
@@ -19,7 +19,7 @@
         { title: "Shoes", links: [["Running", "/shop?category=Women&type=running"], ["Sneakers", "/shop?category=Women&type=sneakers"], ["Casual", "/shop?category=Women&type=casual"], ["Boots", "/shop?category=Women&type=boots"]] },
         { title: "Shop by", links: [["New In", "/shop?category=Women&sort=new"], ["Best Sellers", "/shop?category=Women&sort=popular"], ["Under Rs. 8,000", "/shop?category=Women&max=8000"]] },
       ],
-      feature: { img: "https://picsum.photos/seed/women-feature/500/600", title: "Cloud Walker", sub: "All-day comfort", href: "/shop?category=Women" },
+      feature: { img: "/models/sneaker-model-2.jpeg", title: "Cloud Walker", sub: "All-day comfort", href: "/shop?category=Women" },
     },
     {
       key: "kids", label: "Kids", href: "/shop?category=Kids",
@@ -27,7 +27,7 @@
         { title: "Shoes", links: [["School Shoes", "/shop?category=Kids&type=school"], ["Sneakers", "/shop?category=Kids&type=sneakers"], ["Sports", "/shop?category=Kids&type=sports"]] },
         { title: "Shop by", links: [["Boys", "/shop?category=Kids&gender=boys"], ["Girls", "/shop?category=Kids&gender=girls"], ["New In", "/shop?category=Kids&sort=new"]] },
       ],
-      feature: { img: "https://picsum.photos/seed/kids-feature/500/600", title: "Mini Runner", sub: "Back to school picks", href: "/shop?category=Kids" },
+      feature: { img: "/models/sneaker-model-2.jpeg", title: "Mini Runner", sub: "Back to school picks", href: "/shop?category=Kids" },
     },
     {
       key: "drops", label: "New Drops 🔥", href: "/shop?sort=new",
@@ -35,7 +35,7 @@
         { title: "Just Landed", links: [["This Week", "/shop?sort=new&range=week"], ["This Month", "/shop?sort=new&range=month"], ["Limited Edition", "/shop?tag=limited"]] },
         { title: "Collections", links: [["Street Series", "/shop?collection=street"], ["Performance", "/shop?collection=performance"], ["Everyday Essentials", "/shop?collection=essentials"]] },
       ],
-      feature: { img: "https://picsum.photos/seed/drops-feature/500/600", title: "Midnight High", sub: "Latest drop, limited stock", href: "/shop?sort=new" },
+      feature: { img: "/models/sneaker-model-3.jpg", title: "Midnight High", sub: "Latest drop, limited stock", href: "/shop?sort=new" },
     },
   ];
 
@@ -225,7 +225,7 @@
     <div class="flex justify-between font-semibold mb-4">
       <span>Subtotal</span><span id="drawer-total">Rs. 0</span>
     </div>
-    <a href="/checkout" class="block text-center bg-ink hover:bg-brand text-white font-semibold py-3 rounded-full transition">Checkout</a>
+    <a href="/checkout" data-cart-checkout class="block text-center bg-ink hover:bg-brand text-white font-semibold py-3 rounded-full transition">Checkout</a>
     <a href="/cart" class="block text-center text-sm text-muted mt-3 hover:text-brand">View full cart</a>
   </div>
 </aside>

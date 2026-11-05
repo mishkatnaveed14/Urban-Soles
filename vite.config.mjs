@@ -8,6 +8,7 @@ const rootDir = dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  base: '/build/',
   publicDir: false,
   build: {
     outDir: resolve(rootDir, 'public/build'),

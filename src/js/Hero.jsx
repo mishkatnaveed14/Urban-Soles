@@ -1,11 +1,12 @@
-import { useRef, useState } from "react";
+import { lazy, Suspense, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight, ShoppingBag, ChevronDown } from "lucide-react";
 
-import SneakerScene from "./SneakerScene";
 import ProductCarousel from "./product-carousel";
 import { formatPrice } from "./product.js";
+
+const SneakerScene = lazy(() => import("./SneakerScene"));
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -140,11 +141,13 @@ export default function Hero({ products, addToCart }) {
             <div className="orbit orbit-two" />
 
             <div className="sneaker-canvas-wrap" ref={sceneWrapRef}>
-              <SneakerScene
-                product={product}
-                sneakerRef={sneakerRef}
-                sectionRef={sectionRef}
-              />
+              <Suspense fallback={<div className="scene-loading" aria-label="Loading sneaker scene" />}>
+                <SneakerScene
+                  product={product}
+                  sneakerRef={sneakerRef}
+                  sectionRef={sectionRef}
+                />
+              </Suspense>
             </div>
 
             <div className="visual-caption">

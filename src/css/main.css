@@ -473,6 +473,7 @@ body.nav-overlay-open {
   font-weight: 800;
   letter-spacing: -0.07em;
   line-height: 0.98;
+  text-transform: uppercase;
 }
 
 .product-heading h1 span {
@@ -628,6 +629,12 @@ body.nav-overlay-open {
   display: block;
   width: 100%;
   height: 100%;
+}
+
+.scene-loading {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse, rgb(249 115 22 / 8%), transparent 62%);
 }
 
 .visual-caption {
@@ -1152,6 +1159,27 @@ body {
   background: rgb(8 8 8 / 94%);
 }
 
+.bottom-dock {
+  border-color: #292929;
+  color: #f8fafc;
+  background: rgb(12 12 12 / 97%);
+  box-shadow: 0 -8px 24px rgb(0 0 0 / 35%);
+}
+
+.dock-item,
+.bottom-dock .dock-item {
+  color: #b4b4b8;
+}
+
+.dock-item:hover,
+.dock-item:focus-visible {
+  color: #fb923c;
+}
+
+.bottom-dock .badge {
+  border-color: #0c0c0c;
+}
+
 .site-header .nav-link,
 .site-header .brand-link,
 .site-header button,
@@ -1230,6 +1258,10 @@ body {
 .visual-number,
 .product-card-info h4 {
   color: #f8fafc;
+}
+
+.product-heading h1 {
+  text-transform: uppercase;
 }
 
 .product-description,
