@@ -26,40 +26,17 @@
     text-decoration: none;
   }
 
-  .brand-mark {
-    display: grid;
-    width: 42px;
-    height: 42px;
-    place-items: center;
-    border-radius: 12px;
-    color: #fff;
-    background: #f97316;
-  }
-
-  .brand-mark svg {
-    width: 29px;
-    height: 29px;
-  }
-
-  .brand-name {
-    font-size: 25px;
-    font-weight: 750;
-    letter-spacing: -1.2px;
-  }
-
-  .brand-name span {
-    color: #f97316;
+  .brand-logo {
+    display: block;
+    width: 176px;
+    height: 64px;
+    object-fit: cover;
+    object-position: center 48%;
   }
 </style>
 
 <header class="brand-header">
   <a class="brand" href="/" aria-label="Urban Soles home">
-    <span class="brand-mark" aria-hidden="true">
-      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M5 20.5h3.1c2.5 0 4.3-1 5.7-3l2.1-3 3.4 3.3c1.6 1.6 3.7 2.5 6 2.5H27a2.5 2.5 0 0 1 0 5H7.5a2.5 2.5 0 0 1-2.5-2.5v-2.3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="m15.2 16.3 2.1 1.8m1.1-3.1 2.1 1.8m-9.3 7.5h.1m4.2 0h.1m4.2 0h.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </span>
-    <span class="brand-name">Urban <span>Soles</span></span>
+    <img class="brand-logo" src="/images/Urban%20Soles_%20Step%20Into%20Style.png" alt="Urban Soles">
   </a>
 </header>
