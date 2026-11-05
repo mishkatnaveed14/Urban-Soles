@@ -12,9 +12,13 @@ export default defineConfig({
     outDir: resolve(rootDir, 'public/build'),
     emptyOutDir: true,
     rollupOptions: {
-      input: resolve(rootDir, 'src/css/main.css'),
+      input: {
+        main: resolve(rootDir, 'src/css/main.css'),
+        experience: resolve(rootDir, 'src/js/experience.js'),
+      },
       output: {
         assetFileNames: 'assets/[name][extname]',
+        entryFileNames: 'assets/[name].js',
       },
     },
   },

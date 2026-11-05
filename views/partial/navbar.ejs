@@ -1,59 +1,142 @@
 <%
-  const currentUser = typeof user !== "undefined" ? user : null;
-  const count = typeof cartCount !== "undefined" ? cartCount : 0;
+  /* ---------- Data (yahin se menu badlein) ---------- */
+  const currentUser = locals.user || null;
+  const cartCount = locals.cartCount || 0;
+  const wishCount = locals.wishCount || 0;
+
+  const menus = [
+    {
+      key: "men", label: "Men", href: "/shop?category=Men",
+      cols: [
+        { title: "Shoes", links: [["Running", "/shop?category=Men&type=running"], ["Sneakers", "/shop?category=Men&type=sneakers"], ["Casual", "/shop?category=Men&type=casual"], ["Boots", "/shop?category=Men&type=boots"]] },
+        { title: "Shop by", links: [["New In", "/shop?category=Men&sort=new"], ["Best Sellers", "/shop?category=Men&sort=popular"], ["Under Rs. 8,000", "/shop?category=Men&max=8000"]] },
+      ],
+      feature: { img: "https://picsum.photos/seed/men-feature/500/600", title: "Velocity Pro Edition", sub: "20% Off this week", href: "/shop?category=Men" },
+    },
+    {
+      key: "women", label: "Women", href: "/shop?category=Women",
+      cols: [
+        { title: "Shoes", links: [["Running", "/shop?category=Women&type=running"], ["Sneakers", "/shop?category=Women&type=sneakers"], ["Casual", "/shop?category=Women&type=casual"], ["Boots", "/shop?category=Women&type=boots"]] },
+        { title: "Shop by", links: [["New In", "/shop?category=Women&sort=new"], ["Best Sellers", "/shop?category=Women&sort=popular"], ["Under Rs. 8,000", "/shop?category=Women&max=8000"]] },
+      ],
+      feature: { img: "https://picsum.photos/seed/women-feature/500/600", title: "Cloud Walker", sub: "All-day comfort", href: "/shop?category=Women" },
+    },
+    {
+      key: "kids", label: "Kids", href: "/shop?category=Kids",
+      cols: [
+        { title: "Shoes", links: [["School Shoes", "/shop?category=Kids&type=school"], ["Sneakers", "/shop?category=Kids&type=sneakers"], ["Sports", "/shop?category=Kids&type=sports"]] },
+        { title: "Shop by", links: [["Boys", "/shop?category=Kids&gender=boys"], ["Girls", "/shop?category=Kids&gender=girls"], ["New In", "/shop?category=Kids&sort=new"]] },
+      ],
+      feature: { img: "https://picsum.photos/seed/kids-feature/500/600", title: "Mini Runner", sub: "Back to school picks", href: "/shop?category=Kids" },
+    },
+    {
+      key: "drops", label: "New Drops 🔥", href: "/shop?sort=new",
+      cols: [
+        { title: "Just Landed", links: [["This Week", "/shop?sort=new&range=week"], ["This Month", "/shop?sort=new&range=month"], ["Limited Edition", "/shop?tag=limited"]] },
+        { title: "Collections", links: [["Street Series", "/shop?collection=street"], ["Performance", "/shop?collection=performance"], ["Everyday Essentials", "/shop?collection=essentials"]] },
+      ],
+      feature: { img: "https://picsum.photos/seed/drops-feature/500/600", title: "Midnight High", sub: "Latest drop, limited stock", href: "/shop?sort=new" },
+    },
+  ];
+
+  /* ---------- Icons ---------- */
+  const paths = {
+    search: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
+    heart: '<path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0112 6.5 5.5 5.5 0 0121.5 12C19 16.5 12 21 12 21z"/>',
+    bag: '<path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 016 0v2"/>',
+    user: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
+    menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',
+    close: '<path d="M6 6l12 12M18 6L6 18"/>',
+    chevron: '<path d="M6 9l6 6 6-6"/>',
+    home: '<path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1v-9z"/>',
+    grid: '<rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/>',
+  };
+  function ico(name, cls) {
+    return '<svg class="' + (cls || "w-6 h-6") + '" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">' + paths[name] + "</svg>";
+  }
 %>
 
-<header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-line">
-  <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
+<!-- ===================== HEADER ===================== -->
+<header id="site-header" class="site-header sticky top-0 z-50 border-b border-line">
+  <nav class="nav-inner max-w-6xl mx-auto px-4 flex items-center justify-between gap-4">
 
-    <!-- Logo -->
-    <a href="/" class="font-heading font-bold text-xl tracking-tight shrink-0">
-      URBAN<span class="text-brand">SOLES</span>
+    <!-- Left: Logo -->
+    <a href="/" class="brand-link shrink-0" aria-label="Urban Soles home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 20.5h3.1c2.5 0 4.3-1 5.7-3l2.1-3 3.4 3.3c1.6 1.6 3.7 2.5 6 2.5H27a2.5 2.5 0 0 1 0 5H7.5a2.5 2.5 0 0 1-2.5-2.5v-2.3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="m15.2 16.3 2.1 1.8m1.1-3.1 2.1 1.8m-9.3 7.5h.1m4.2 0h.1m4.2 0h.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="brand-name">Urban <span>Soles</span></span>
     </a>
 
-    <!-- Desktop links -->
-    <ul class="hidden md:flex items-center gap-8 text-sm font-medium h-16">
-      <li class="h-16 flex items-center"><a href="/" class="hover:text-brand">Home</a></li>
+    <!-- Center: Desktop links + mega menus -->
+    <ul class="hidden md:flex items-stretch gap-8 h-full text-sm font-medium">
+      <% menus.forEach(function (m) { %>
+        <li class="mega-item h-full flex items-center">
+          <a href="<%= m.href %>" class="nav-link flex items-center gap-1 py-2"><%= m.label %></a>
 
-      <!-- Shop dropdown -->
-      <li class="relative group h-16 flex items-center">
-        <a href="/shop" class="flex items-center gap-1 hover:text-brand">
-          Shop
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-        </a>
-        <div class="absolute left-0 top-full hidden group-hover:block group-focus-within:block w-52 bg-white border border-line rounded-xl shadow-lg p-2">
-          <a href="/shop" class="block px-3 py-2 rounded-lg hover:bg-surface hover:text-brand">All Sneakers</a>
-          <a href="/shop?category=Men" class="block px-3 py-2 rounded-lg hover:bg-surface hover:text-brand">Men</a>
-          <a href="/shop?category=Women" class="block px-3 py-2 rounded-lg hover:bg-surface hover:text-brand">Women</a>
-          <a href="/shop?category=Sports" class="block px-3 py-2 rounded-lg hover:bg-surface hover:text-brand">Sports</a>
-          <a href="/shop?category=Casual" class="block px-3 py-2 rounded-lg hover:bg-surface hover:text-brand">Casual</a>
-        </div>
+          <!-- Mega menu -->
+          <div class="mega-panel absolute left-0 right-0 top-full">
+            <div class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-12 gap-8">
+              <% m.cols.forEach(function (col) { %>
+                <div class="col-span-3">
+                  <p class="text-xs uppercase tracking-wide text-muted mb-3"><%= col.title %></p>
+                  <ul class="space-y-2">
+                    <% col.links.forEach(function (l) { %>
+                      <li><a href="<%= l[1] %>" class="mega-link text-sm"><%= l[0] %></a></li>
+                    <% }) %>
+                  </ul>
+                </div>
+              <% }) %>
+
+              <!-- Featured shoe card -->
+              <a href="<%= m.feature.href %>" class="col-span-6 group relative rounded-2xl overflow-hidden bg-surface flex">
+                <img src="<%= m.feature.img %>" alt="<%= m.feature.title %>" class="w-1/2 h-56 object-cover group-hover:scale-105 transition duration-500" />
+                <div class="w-1/2 p-6 flex flex-col justify-center">
+                  <p class="text-xs font-semibold text-brand uppercase tracking-wide">Featured</p>
+                  <h3 class="font-heading font-semibold text-lg mt-1"><%= m.feature.title %></h3>
+                  <p class="text-sm text-muted mt-1"><%= m.feature.sub %></p>
+                  <span class="mt-4 inline-block self-start bg-ink text-white text-xs font-semibold px-4 py-2 rounded-full group-hover:bg-brand transition">Shop Now</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </li>
+      <% }) %>
+
+      <li class="h-full flex items-center">
+        <a href="/shop?sale=true" class="nav-link py-2 text-red-600 font-semibold">Sale</a>
       </li>
-
-      <li class="h-16 flex items-center"><a href="/shop?sort=new" class="hover:text-brand">New Arrivals</a></li>
-      <li class="h-16 flex items-center"><a href="/contact" class="hover:text-brand">Contact</a></li>
     </ul>
 
-    <!-- Right side -->
-    <div class="flex items-center gap-3 text-sm font-medium">
+    <!-- Right: Actions -->
+    <div class="flex items-center gap-3 md:gap-4">
 
-      <!-- Search (desktop) -->
-      <form action="/shop" method="GET" class="hidden lg:block">
-        <input type="text" name="search" placeholder="Search sneakers..."
-               class="w-48 border border-line rounded-full px-4 py-2 text-sm focus:outline-none focus:border-brand" />
+      <!-- Search -->
+      <form id="search-form" action="/shop" method="GET" class="search-box hidden md:flex items-center">
+        <input id="search-input" type="search" name="search" value="<%= typeof search === 'string' ? search : '' %>" placeholder="Search sneakers..." autocomplete="off"
+               class="search-input text-sm bg-surface rounded-full focus:outline-none" />
+        <button type="submit" id="search-toggle" class="p-1 hover:text-brand" aria-label="Search"><%- ico("search") %></button>
       </form>
+      <button type="button" data-open-search class="md:hidden p-1" aria-label="Search"><%- ico("search") %></button>
 
-      <!-- Account dropdown (desktop) -->
-      <div class="relative group h-16 hidden md:flex items-center">
-        <button class="flex items-center gap-1 hover:text-brand" aria-label="Account">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
-          <% if (currentUser) { %><span class="max-w-[90px] truncate"><%= currentUser.name %></span><% } %>
-        </button>
-        <div class="absolute right-0 top-full hidden group-hover:block group-focus-within:block w-48 bg-white border border-line rounded-xl shadow-lg p-2">
+      <!-- Wishlist (desktop) -->
+      <a href="/wishlist" class="relative hidden md:block p-1 hover:text-brand" aria-label="Wishlist">
+        <%- ico("heart") %>
+        <span data-wish-count class="badge <%= wishCount ? '' : 'hidden' %>"><%= wishCount %></span>
+      </a>
+
+      <!-- Profile (desktop dropdown) -->
+      <div class="profile-wrap relative hidden md:flex items-center h-full">
+        <button type="button" class="p-1 hover:text-brand" aria-label="Account"><%- ico("user") %></button>
+        <div class="profile-menu absolute right-0 top-full w-52 bg-white border border-line rounded-xl shadow-lg p-2 text-sm">
           <% if (!currentUser) { %>
             <a href="/login" class="block px-3 py-2 rounded-lg hover:bg-surface hover:text-brand">Login</a>
             <a href="/signup" class="block px-3 py-2 rounded-lg hover:bg-surface hover:text-brand">Sign Up</a>
           <% } else { %>
+            <p class="px-3 py-2 text-xs text-muted truncate">Hi, <%= currentUser.name %></p>
             <% if (currentUser.role === "admin") { %>
               <a href="/admin" class="block px-3 py-2 rounded-lg hover:bg-surface hover:text-brand">Admin Dashboard</a>
             <% } %>
@@ -65,41 +148,119 @@
         </div>
       </div>
 
-      <!-- Cart -->
-      <a href="/cart" class="relative flex items-center" aria-label="Cart">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 4h2l2.4 11h10.2L20 7H6"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/></svg>
-        <span class="absolute -top-2 -right-2 bg-brand text-white text-xs font-semibold w-5 h-5 rounded-full flex items-center justify-center"><%= count %></span>
-      </a>
+      <!-- Cart (opens slide-over drawer) -->
+      <button type="button" data-open-cart class="relative p-1 hover:text-brand" aria-label="Open cart">
+        <%- ico("bag") %>
+        <span data-cart-count class="badge <%= cartCount ? '' : 'hidden' %>"><%= cartCount %></span>
+      </button>
 
       <!-- Hamburger (mobile) -->
-      <button id="menu-btn" class="md:hidden" aria-label="Menu">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-      </button>
+      <button type="button" data-open-menu class="md:hidden p-1" aria-label="Menu"><%- ico("menu") %></button>
     </div>
   </nav>
-
-  <!-- Mobile menu -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-line bg-white px-4 py-4 space-y-1 text-sm font-medium">
-    <form action="/shop" method="GET" class="mb-3">
-      <input type="text" name="search" placeholder="Search sneakers..."
-             class="w-full border border-line rounded-full px-4 py-2 focus:outline-none focus:border-brand" />
-    </form>
-    <a href="/" class="block py-2">Home</a>
-    <a href="/shop" class="block py-2">Shop</a>
-    <a href="/shop?category=Men" class="block py-2 pl-4 text-muted">Men</a>
-    <a href="/shop?category=Women" class="block py-2 pl-4 text-muted">Women</a>
-    <a href="/shop?category=Sports" class="block py-2 pl-4 text-muted">Sports</a>
-    <a href="/shop?category=Casual" class="block py-2 pl-4 text-muted">Casual</a>
-    <a href="/shop?sort=new" class="block py-2">New Arrivals</a>
-    <a href="/contact" class="block py-2">Contact</a>
-    <hr class="border-line my-2" />
-    <% if (!currentUser) { %>
-      <a href="/login" class="block py-2">Login</a>
-      <a href="/signup" class="block py-2">Sign Up</a>
-    <% } else { %>
-      <% if (currentUser.role === "admin") { %><a href="/admin" class="block py-2">Admin Dashboard</a><% } %>
-      <a href="/my-orders" class="block py-2">My Orders</a>
-      <form action="/logout" method="POST"><button type="submit" class="py-2">Logout</button></form>
-    <% } %>
-  </div>
 </header>
+
+<!-- ===================== MOBILE FULL-SCREEN MENU ===================== -->
+<div id="mobile-menu" class="mobile-menu fixed inset-0 z-[60] bg-white md:hidden hidden" aria-hidden="true">
+  <div class="h-16 px-4 flex items-center justify-between border-b border-line">
+    <a href="/" class="brand-link" aria-label="Urban Soles home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 20.5h3.1c2.5 0 4.3-1 5.7-3l2.1-3 3.4 3.3c1.6 1.6 3.7 2.5 6 2.5H27a2.5 2.5 0 0 1 0 5H7.5a2.5 2.5 0 0 1-2.5-2.5v-2.3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="m15.2 16.3 2.1 1.8m1.1-3.1 2.1 1.8m-9.3 7.5h.1m4.2 0h.1m4.2 0h.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="brand-name">Urban <span>Soles</span></span>
+    </a>
+    <button type="button" data-close-menu class="p-1" aria-label="Close menu"><%- ico("close") %></button>
+  </div>
+
+  <div class="overflow-y-auto h-[calc(100%-4rem)] px-4 py-4">
+    <% menus.forEach(function (m) { %>
+      <div class="border-b border-line">
+        <button type="button" class="accordion-btn w-full flex items-center justify-between py-4 text-lg font-heading font-semibold" aria-expanded="false">
+          <%= m.label %>
+          <span class="accordion-icon transition-transform"><%- ico("chevron", "w-5 h-5") %></span>
+        </button>
+        <div class="accordion-panel hidden pb-4 pl-2 space-y-3">
+          <a href="<%= m.href %>" class="block text-brand font-medium">Shop all <%= m.key === "drops" ? "New Drops" : m.label %></a>
+          <% m.cols.forEach(function (col) { col.links.forEach(function (l) { %>
+            <a href="<%= l[1] %>" class="block text-muted"><%= l[0] %></a>
+          <% }) }) %>
+        </div>
+      </div>
+    <% }) %>
+
+    <a href="/shop?sale=true" class="block py-4 text-lg font-heading font-semibold text-red-600 border-b border-line">Sale</a>
+
+    <div class="py-6 space-y-3 text-sm">
+      <% if (!currentUser) { %>
+        <a href="/login" class="block w-full text-center bg-ink text-white font-semibold py-3 rounded-full">Login</a>
+        <a href="/signup" class="block w-full text-center border border-line font-semibold py-3 rounded-full">Sign Up</a>
+      <% } else { %>
+        <% if (currentUser.role === "admin") { %><a href="/admin" class="block py-2">Admin Dashboard</a><% } %>
+        <a href="/my-orders" class="block py-2">My Orders</a>
+        <form action="/logout" method="POST"><button type="submit" class="py-2">Logout</button></form>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MOBILE SEARCH OVERLAY ===================== -->
+<div id="search-overlay" class="search-overlay fixed inset-0 z-[70] bg-white/95 backdrop-blur-md hidden" aria-hidden="true">
+  <form action="/shop" method="GET" class="max-w-xl mx-auto px-4 pt-6 flex items-center gap-3">
+    <input id="overlay-input" type="search" name="search" value="<%= typeof search === 'string' ? search : '' %>" placeholder="Search sneakers..." autocomplete="off"
+           class="flex-1 border border-line rounded-full px-5 py-3 focus:outline-none focus:border-brand" />
+    <button type="button" data-close-search class="p-1" aria-label="Close search"><%- ico("close") %></button>
+  </form>
+</div>
+
+<!-- ===================== CART DRAWER ===================== -->
+<div id="drawer-backdrop" class="drawer-backdrop fixed inset-0 z-[80] bg-black/40 hidden" data-close-cart aria-hidden="true"></div>
+<aside id="cart-drawer" class="cart-drawer fixed top-0 right-0 z-[90] h-full w-full max-w-sm bg-white shadow-2xl flex flex-col hidden" aria-hidden="true">
+  <div class="h-16 px-5 flex items-center justify-between border-b border-line">
+    <h2 class="font-heading font-semibold text-lg">Your Cart</h2>
+    <button type="button" data-close-cart class="p-1" aria-label="Close cart"><%- ico("close") %></button>
+  </div>
+
+  <!-- Cart items yahan baad mein JS se aayenge -->
+  <div id="drawer-items" class="flex-1 overflow-y-auto p-5">
+    <div class="h-full flex flex-col items-center justify-center text-center text-muted">
+      <%- ico("bag", "w-12 h-12 mb-3") %>
+      <p class="font-medium text-ink">Your cart is empty</p>
+      <p class="text-sm mt-1">Add some sneakers to get started.</p>
+      <a href="/shop" data-close-cart class="mt-5 bg-brand hover:bg-brand-dark text-white text-sm font-semibold px-6 py-3 rounded-full transition">Shop Now</a>
+    </div>
+  </div>
+
+  <div class="border-t border-line p-5">
+    <div class="flex justify-between font-semibold mb-4">
+      <span>Subtotal</span><span id="drawer-total">Rs. 0</span>
+    </div>
+    <a href="/checkout" class="block text-center bg-ink hover:bg-brand text-white font-semibold py-3 rounded-full transition">Checkout</a>
+    <a href="/cart" class="block text-center text-sm text-muted mt-3 hover:text-brand">View full cart</a>
+  </div>
+</aside>
+
+<!-- ===================== MOBILE BOTTOM DOCK ===================== -->
+<nav class="bottom-dock fixed bottom-0 inset-x-0 z-40 md:hidden border-t border-line" aria-label="Quick navigation">
+  <ul class="grid grid-cols-5 text-[11px] font-medium">
+    <li><a href="/" class="dock-item"><%- ico("home") %><span>Home</span></a></li>
+    <li><button type="button" data-open-menu class="dock-item w-full"><%- ico("grid") %><span>Categories</span></button></li>
+    <li><button type="button" data-open-search class="dock-item w-full"><%- ico("search") %><span>Search</span></button></li>
+    <li>
+      <a href="/wishlist" class="dock-item relative">
+        <%- ico("heart") %><span>Wishlist</span>
+        <span data-wish-count class="badge badge-dock <%= wishCount ? '' : 'hidden' %>"><%= wishCount %></span>
+      </a>
+    </li>
+    <li>
+      <button type="button" data-open-cart class="dock-item w-full relative">
+        <%- ico("bag") %><span>Cart</span>
+        <span data-cart-count class="badge badge-dock <%= cartCount ? '' : 'hidden' %>"><%= cartCount %></span>
+      </button>
+    </li>
+  </ul>
+</nav>
+
+<script src="/js/main.js" defer></script>
