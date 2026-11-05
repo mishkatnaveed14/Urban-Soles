@@ -10,6 +10,7 @@ const openPanels = new Set()
 let lastFocusedElement = null
 
 const animationDuration = reducedMotion ? 0 : 0.24
+const focusTargets = new WeakMap()
 
 function updateScrollLock() {
   document.body.classList.toggle('nav-overlay-open', openPanels.size > 0)
@@ -30,16 +31,27 @@ function hide(element) {
   element.classList.add('hidden')
   element.setAttribute('aria-hidden', 'true')
   gsap.set(element, { clearProps: 'opacity,visibility,transform' })
+
+  const triggerSelector = element === mobileMenu
+    ? '[data-open-menu]'
+    : element === searchOverlay
+      ? '[data-open-search]'
+      : element === cartDrawer
+        ? '[data-open-cart]'
+        : null
+  if (triggerSelector) {
+    document.querySelectorAll(triggerSelector).forEach((button) => {
+      button.setAttribute('aria-expanded', 'false')
+    })
+  }
 }
 
 function closePanel(element, onClosed) {
-  if (!element || element.classList.contains('hidden')) {
-    onClosed?.()
-    return
-  }
+  if (!element || element.classList.contains('hidden')) return
 
   openPanels.delete(element)
   updateScrollLock()
+  element.setAttribute('aria-hidden', 'true')
   gsap.killTweensOf(element)
 
   if (reducedMotion) {
@@ -61,7 +73,10 @@ function closePanel(element, onClosed) {
 
 function closeAllPanels(except) {
   overlayPanels.forEach((panel) => {
-    if (panel !== except) closePanel(panel)
+    if (panel !== except) {
+      closePanel(panel)
+      if (panel === cartDrawer) closePanel(drawerBackdrop)
+    }
   })
 }
 
@@ -69,7 +84,9 @@ function openPanel(element, trigger) {
   if (!element) return
 
   closeAllPanels(element)
-  lastFocusedElement = trigger instanceof HTMLElement ? trigger : document.activeElement
+  const focusTarget = trigger instanceof HTMLElement ? trigger : document.activeElement
+  focusTargets.set(element, focusTarget)
+  lastFocusedElement = focusTarget
   reveal(element)
   openPanels.add(element)
   updateScrollLock()
@@ -115,6 +132,8 @@ function closeMenu() {
     document.querySelectorAll('[data-open-menu]').forEach((button) => {
       button.setAttribute('aria-expanded', 'false')
     })
+    const focusTarget = focusTargets.get(mobileMenu)
+    if (focusTarget instanceof HTMLElement) focusTarget.focus()
   })
 }
 
@@ -132,6 +151,8 @@ function closeCart() {
     document.querySelectorAll('[data-open-cart]').forEach((button) => {
       button.setAttribute('aria-expanded', 'false')
     })
+    const focusTarget = focusTargets.get(cartDrawer)
+    if (focusTarget instanceof HTMLElement) focusTarget.focus()
   })
   closePanel(drawerBackdrop)
 }
