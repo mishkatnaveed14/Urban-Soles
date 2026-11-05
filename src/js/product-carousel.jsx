@@ -71,12 +71,7 @@ export default function ProductCarousel({
             >
               <div className="product-card-image">
                 <span>{product.tag}</span>
-
-                <div className="product-placeholder">
-                  <div className="mini-shoe">
-                    <span />
-                  </div>
-                </div>
+                <img src={product.image} alt={product.name} loading="lazy" />
               </div>
 
               <div className="product-card-info">

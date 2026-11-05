@@ -52,17 +52,26 @@
           <article class="product-card">
             <div class="product-visual">
               <span class="product-tag"><%= product.tag %></span>
-              <svg viewBox="0 0 180 110" fill="none" aria-hidden="true">
-                <path d="M18 69h17c12 0 22-5 29-16l11-16 18 17c10 9 22 14 35 14h25a10 10 0 0 1 0 20H32a14 14 0 0 1-14-14v-5Z" fill="currentColor"/>
-                <path d="m76 48 13 10m8-16 13 10m-9 4 13 8" stroke="#fff7ed" stroke-width="4" stroke-linecap="round"/>
-                <path d="M21 79h132" stroke="#172033" stroke-opacity=".35" stroke-width="3" stroke-linecap="round"/>
-              </svg>
+              <img src="<%= product.image %>" alt="<%= product.name %>" loading="lazy">
             </div>
             <div class="product-info">
               <span class="product-category"><%= product.category %> / <%= product.type %></span>
               <h2 class="product-name"><%= product.name %></h2>
-              <p class="product-price">Rs. <%= product.price.toLocaleString('en-PK') %></p>
+              <p class="product-price"><%= new Intl.NumberFormat('en-PK', { style: 'currency', currency: 'PKR', maximumFractionDigits: 0 }).format(product.price) %>
+                <% if (product.oldPrice) { %><del><%= new Intl.NumberFormat('en-PK', { style: 'currency', currency: 'PKR', maximumFractionDigits: 0 }).format(product.oldPrice) %></del><% } %>
+              </p>
               <a class="product-link" href="/product-detail?product=<%= product.id %>">View details &rarr;</a>
+              <form class="product-buy-controls" data-product-form>
+                <label class="sr-only" for="shop-size-<%= product.id %>">Choose UK size for <%= product.name %></label>
+                <select id="shop-size-<%= product.id %>" name="size" required>
+                  <option value="">Select size</option>
+                  <% product.sizes.forEach(function (size) { %>
+                    <option value="<%= size %>">UK <%= size %></option>
+                  <% }) %>
+                </select>
+                <button class="store-button store-button-primary" type="button" data-product-add data-product-id="<%= product.id %>">Add to cart</button>
+                <span class="product-add-notice" data-product-notice role="status" aria-live="polite"></span>
+              </form>
             </div>
           </article>
         <% }) %>

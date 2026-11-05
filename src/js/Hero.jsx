@@ -55,7 +55,10 @@ export default function Hero({ products, addToCart }) {
   };
 
   const handleAddToCart = () => {
-    if (product && selectedSize !== null) addToCart(product, selectedSize);
+    if (product && selectedSize !== null) {
+      addToCart(product, selectedSize);
+      window.dispatchEvent(new CustomEvent("urban-soles:open-cart"));
+    }
   };
 
   if (!product) return null;

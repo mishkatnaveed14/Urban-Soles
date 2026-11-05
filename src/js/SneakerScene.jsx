@@ -33,7 +33,9 @@ function Lace({ z, y }) {
   );
 }
 
-function ProceduralSneaker() {
+function ProceduralSneaker({ product }) {
+  const isLight = !product.color.toLowerCase().includes("black");
+
   return (
     <group rotation={[0.18, -0.3, -0.12]} scale={1.1}>
       {/* Sole */}
@@ -59,19 +61,19 @@ function ProceduralSneaker() {
       {/* Main upper */}
       <mesh position={[-0.02, 0.02, 0]} scale={[1.25, 0.43, 0.48]}>
         <sphereGeometry args={[1, 48, 32]} />
-        <meshStandardMaterial color="#181818" roughness={0.6} />
+        <meshStandardMaterial color={isLight ? "#f4f1ed" : "#181818"} roughness={0.6} />
       </mesh>
 
       {/* Toe */}
       <mesh position={[0.9, -0.03, 0]} scale={[0.43, 0.34, 0.49]}>
         <sphereGeometry args={[1, 32, 24]} />
-        <meshStandardMaterial color="#242424" roughness={0.55} />
+        <meshStandardMaterial color={isLight ? "#e5e2de" : "#242424"} roughness={0.55} />
       </mesh>
 
       {/* Heel */}
       <mesh position={[-1, 0.03, 0]} scale={[0.4, 0.4, 0.47]}>
         <sphereGeometry args={[1, 32, 24]} />
-        <meshStandardMaterial color="#111111" />
+        <meshStandardMaterial color={isLight ? "#dedbd7" : "#111111"} />
       </mesh>
 
       {/* Orange side accent */}
@@ -172,7 +174,7 @@ function SneakerContent({ product, sneakerRef, sectionRef }) {
           {product.model ? (
             <RealSneaker path={product.model} />
           ) : (
-            <ProceduralSneaker />
+            <ProceduralSneaker product={product} />
           )}
         </Float>
       </group>

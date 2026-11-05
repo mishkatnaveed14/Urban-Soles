@@ -1,4 +1,5 @@
 import { gsap } from 'gsap'
+import { initializeStorefront } from './storefront.js'
 
 const mobileMenu = document.getElementById('mobile-menu')
 const searchOverlay = document.getElementById('search-overlay')
@@ -223,3 +224,5 @@ if (!reducedMotion) {
   })
 
 }
+
+initializeStorefront()
