@@ -8,8 +8,12 @@ import {
   useGLTF,
 } from "@react-three/drei";
 
-import { Suspense } from "react";
+import { Suspense, useLayoutEffect } from "react";
 import * as THREE from "three";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 function Lace({ z, y }) {
   const points = [
@@ -115,7 +119,38 @@ function RealSneaker({ path }) {
   return <primitive object={clone} scale={2} />;
 }
 
-function SneakerContent({ product, sneakerRef }) {
+function SneakerContent({ product, sneakerRef, sectionRef }) {
+  useLayoutEffect(() => {
+    const sneaker = sneakerRef.current;
+    if (!sectionRef.current || !sneaker) return undefined;
+
+    const ctx = gsap.context(() => {
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1.3,
+        },
+      })
+        .to(sneaker.rotation, {
+          y: Math.PI * 2,
+          x: 0.15,
+          ease: "none",
+        })
+        .to(
+          sneaker.position,
+          {
+            y: 0.35,
+            ease: "none",
+          },
+          0
+        );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [sectionRef, sneakerRef]);
+
   return (
     <>
       <ambientLight intensity={1.1} />
@@ -162,7 +197,7 @@ function SneakerContent({ product, sneakerRef }) {
   );
 }
 
-export default function SneakerScene({ product, sneakerRef }) {
+export default function SneakerScene({ product, sneakerRef, sectionRef }) {
   return (
     <Canvas
       camera={{
@@ -176,7 +211,11 @@ export default function SneakerScene({ product, sneakerRef }) {
       }}
     >
       <Suspense fallback={null}>
-        <SneakerContent product={product} sneakerRef={sneakerRef} />
+        <SneakerContent
+          product={product}
+          sneakerRef={sneakerRef}
+          sectionRef={sectionRef}
+        />
       </Suspense>
     </Canvas>
   );

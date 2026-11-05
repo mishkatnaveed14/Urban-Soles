@@ -1,4 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import "swiper/css";
@@ -38,6 +39,7 @@ export default function ProductCarousel({
       </div>
 
       <Swiper
+        modules={[Navigation]}
         slidesPerView={2}
         spaceBetween={12}
         navigation={{

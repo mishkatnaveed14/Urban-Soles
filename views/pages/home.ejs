@@ -5,28 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Urban Soles</title>
   <link rel="stylesheet" href="/build/assets/main.css">
+  <link rel="stylesheet" href="/build/assets/home.css">
 </head>
 <body>
   <%- include('../partial/navbar') %>
   <main>
-    <section class="home-hero">
-      <div class="hero-copy">
-        <p class="hero-kicker">STEP INTO YOUR NEXT</p>
-        <h1 class="hero-title">Move different.<br><span>Feel every step.</span></h1>
-        <p class="hero-description">Everyday comfort meets street-ready style. Find the pair that moves with you.</p>
-        <a class="hero-cta" href="/shop">Explore the collection <span aria-hidden="true">&rarr;</span></a>
-        <p class="hero-note">Designed for the streets. Ready for anywhere.</p>
-      </div>
-      <div class="hero-visual" aria-label="Interactive 3D Urban Soles sneaker">
-        <div class="hero-glow"></div>
-        <canvas id="shoe-canvas" aria-label="Rotating 3D sneaker model"></canvas>
-        <span class="hero-stamp">URBAN<br>SOLES<br><b>EST. 2025</b></span>
-        <span class="hero-orbit hero-orbit-one"></span>
-        <span class="hero-orbit hero-orbit-two"></span>
-      </div>
-      <span class="hero-index">01 / NEW SEASON</span>
-    </section>
+    <div id="home-hero-root"></div>
   </main>
-  <script type="module" src="/build/assets/experience.js"></script>
+  <script type="module" src="/build/assets/home.js"></script>
 </body>
 </html>
