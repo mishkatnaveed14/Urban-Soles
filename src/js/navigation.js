@@ -53,22 +53,8 @@ function closePanel(element, onClosed) {
   updateScrollLock()
   element.setAttribute('aria-hidden', 'true')
   gsap.killTweensOf(element)
-
-  if (reducedMotion) {
-    hide(element)
-    onClosed?.()
-    return
-  }
-
-  gsap.to(element, {
-    autoAlpha: 0,
-    duration: animationDuration,
-    ease: 'power2.in',
-    onComplete: () => {
-      if (element.getAttribute('aria-hidden') === 'true') hide(element)
-      onClosed?.()
-    },
-  })
+  hide(element)
+  onClosed?.()
 }
 
 function closeAllPanels(except) {
@@ -94,9 +80,8 @@ function openPanel(element, trigger) {
   const isDrawer = element === cartDrawer
   gsap.fromTo(
     element,
-    isDrawer ? { autoAlpha: 0, x: 28 } : { autoAlpha: 0, y: 8 },
+    isDrawer ? { x: 14 } : { y: 6 },
     {
-      autoAlpha: 1,
       x: 0,
       y: 0,
       duration: animationDuration,
@@ -108,12 +93,10 @@ function openPanel(element, trigger) {
   if (element === mobileMenu) {
     const rows = element.querySelectorAll('.accordion-btn, .mobile-menu-link')
     if (rows.length && !reducedMotion) {
-      gsap.fromTo(rows, { autoAlpha: 0, y: 10 }, {
-        autoAlpha: 1,
+      gsap.fromTo(rows, { y: 6 }, {
         y: 0,
         duration: 0.3,
         stagger: 0.035,
-        delay: 0.06,
         ease: 'power2.out',
         clearProps: 'transform',
       })
@@ -164,33 +147,25 @@ function toggleAccordion(button) {
   const isExpanded = button.getAttribute('aria-expanded') === 'true'
   const icon = button.querySelector('.accordion-icon')
   button.setAttribute('aria-expanded', String(!isExpanded))
-  gsap.killTweensOf(panel)
 
   if (isExpanded) {
-    gsap.to(panel, {
-      height: 0,
-      autoAlpha: 0,
-      duration: animationDuration,
-      ease: 'power2.in',
-      onComplete: () => {
-        if (button.getAttribute('aria-expanded') === 'false') {
-          panel.classList.add('hidden')
-          gsap.set(panel, { clearProps: 'height,opacity,visibility,transform' })
-        }
-      },
-    })
+    panel.classList.add('hidden')
+    gsap.set(panel, { clearProps: 'height,opacity,visibility,transform' })
     if (icon) gsap.to(icon, { rotate: 0, duration: animationDuration })
     return
   }
 
   panel.classList.remove('hidden')
-  gsap.fromTo(panel, { height: 0, autoAlpha: 0 }, {
-    height: 'auto',
-    autoAlpha: 1,
-    duration: animationDuration,
-    ease: 'power2.out',
-    onComplete: () => gsap.set(panel, { clearProps: 'height,opacity,visibility,transform' }),
-  })
+  const links = panel.querySelectorAll('a')
+  if (!reducedMotion && links.length) {
+    gsap.fromTo(links, { y: 5 }, {
+      y: 0,
+      duration: 0.2,
+      stagger: 0.025,
+      ease: 'power2.out',
+      clearProps: 'transform',
+    })
+  }
   if (icon) gsap.to(icon, { rotate: 180, duration: animationDuration })
 }
 
@@ -218,11 +193,6 @@ document.addEventListener('click', (event) => {
   if (cartTrigger) {
     openPanel(cartDrawer, cartTrigger)
     reveal(drawerBackdrop)
-    gsap.fromTo(drawerBackdrop, { autoAlpha: 0 }, {
-      autoAlpha: 1,
-      duration: animationDuration,
-      ease: 'power2.out',
-    })
     cartTrigger.setAttribute('aria-expanded', 'true')
   } else if (event.target.closest('[data-close-cart]')) {
     closeCart()
@@ -244,8 +214,7 @@ document.addEventListener('keydown', (event) => {
 
 if (!reducedMotion) {
   const headerItems = document.querySelectorAll('.brand-link, .nav-inner > ul > li, .nav-inner > .flex > button')
-  gsap.fromTo(headerItems, { autoAlpha: 0, y: -8 }, {
-    autoAlpha: 1,
+  gsap.fromTo(headerItems, { y: -6 }, {
     y: 0,
     duration: 0.45,
     stagger: 0.035,
@@ -255,11 +224,9 @@ if (!reducedMotion) {
 
   const dock = document.querySelector('.bottom-dock')
   if (dock) {
-    gsap.fromTo(dock, { autoAlpha: 0, y: 12 }, {
-      autoAlpha: 1,
+    gsap.fromTo(dock, { y: 8 }, {
       y: 0,
       duration: 0.45,
-      delay: 0.1,
       ease: 'power2.out',
       clearProps: 'transform',
     })
