@@ -222,13 +222,4 @@ if (!reducedMotion) {
     clearProps: 'transform',
   })
 
-  const dock = document.querySelector('.bottom-dock')
-  if (dock) {
-    gsap.fromTo(dock, { y: 8 }, {
-      y: 0,
-      duration: 0.45,
-      ease: 'power2.out',
-      clearProps: 'transform',
-    })
-  }
 }
