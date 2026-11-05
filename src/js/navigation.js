@@ -104,7 +104,7 @@ function openPanel(element, trigger) {
   }
 
   if (element === searchOverlay) {
-    requestAnimationFrame(() => document.getElementById('overlay-input')?.focus())
+    document.getElementById('overlay-input')?.focus({ preventScroll: true })
   } else {
     element.querySelector('button, a, input')?.focus({ preventScroll: true })
   }

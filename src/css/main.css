@@ -129,6 +129,10 @@
   transition: color 180ms ease, background-color 180ms ease;
 }
 
+.bottom-dock button.dock-item {
+  min-height: 64px;
+}
+
 .dock-item svg {
   width: 21px;
   height: 21px;
