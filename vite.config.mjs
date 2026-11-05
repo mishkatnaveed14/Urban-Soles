@@ -15,6 +15,7 @@ export default defineConfig({
       input: {
         main: resolve(rootDir, 'src/css/main.css'),
         experience: resolve(rootDir, 'src/js/experience.js'),
+        navigation: resolve(rootDir, 'src/js/navigation.js'),
       },
       output: {
         assetFileNames: 'assets/[name][extname]',

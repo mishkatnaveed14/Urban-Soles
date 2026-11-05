@@ -66,7 +66,7 @@
     </a>
 
     <!-- Center: Desktop links + mega menus -->
-    <ul class="hidden md:flex items-stretch gap-8 h-full text-sm font-medium">
+    <ul class="hidden lg:flex items-stretch gap-8 h-full text-sm font-medium">
       <% menus.forEach(function (m) { %>
         <li class="mega-item h-full flex items-center">
           <a href="<%= m.href %>" class="nav-link flex items-center gap-1 py-2"><%= m.label %></a>
@@ -109,22 +109,22 @@
     <div class="flex items-center gap-3 md:gap-4">
 
       <!-- Search -->
-      <form id="search-form" action="/shop" method="GET" class="search-box hidden md:flex items-center">
+      <form id="search-form" action="/shop" method="GET" class="search-box hidden lg:flex items-center">
         <input id="search-input" type="search" name="search" value="<%= typeof search === 'string' ? search : '' %>" placeholder="Search sneakers..." autocomplete="off"
                class="search-input text-sm bg-surface rounded-full focus:outline-none" />
         <button type="submit" id="search-toggle" class="p-1 hover:text-brand" aria-label="Search"><%- ico("search") %></button>
       </form>
-      <button type="button" data-open-search class="md:hidden p-1" aria-label="Search"><%- ico("search") %></button>
+      <button type="button" data-open-search class="lg:hidden p-1" aria-label="Search" aria-controls="search-overlay" aria-expanded="false"><%- ico("search") %></button>
 
       <!-- Wishlist (desktop) -->
-      <a href="/wishlist" class="relative hidden md:block p-1 hover:text-brand" aria-label="Wishlist">
+      <a href="/wishlist" class="relative hidden lg:block p-1 hover:text-brand" aria-label="Wishlist">
         <%- ico("heart") %>
         <span data-wish-count class="badge <%= wishCount ? '' : 'hidden' %>"><%= wishCount %></span>
       </a>
 
       <!-- Profile (desktop dropdown) -->
-      <div class="profile-wrap relative hidden md:flex items-center h-full">
-        <button type="button" class="p-1 hover:text-brand" aria-label="Account"><%- ico("user") %></button>
+      <div class="profile-wrap relative hidden lg:flex items-center h-full">
+        <button type="button" class="p-1 hover:text-brand" aria-label="Account" aria-expanded="false"><%- ico("user") %></button>
         <div class="profile-menu absolute right-0 top-full w-52 bg-white border border-line rounded-xl shadow-lg p-2 text-sm">
           <% if (!currentUser) { %>
             <a href="/login" class="block px-3 py-2 rounded-lg hover:bg-surface hover:text-brand">Login</a>
@@ -143,19 +143,19 @@
       </div>
 
       <!-- Cart (opens slide-over drawer) -->
-      <button type="button" data-open-cart class="relative p-1 hover:text-brand" aria-label="Open cart">
+      <button type="button" data-open-cart class="relative p-1 hover:text-brand" aria-label="Open cart" aria-controls="cart-drawer" aria-expanded="false">
         <%- ico("bag") %>
         <span data-cart-count class="badge <%= cartCount ? '' : 'hidden' %>"><%= cartCount %></span>
       </button>
 
       <!-- Hamburger (mobile) -->
-      <button type="button" data-open-menu class="md:hidden p-1" aria-label="Menu"><%- ico("menu") %></button>
+      <button type="button" data-open-menu class="lg:hidden p-1" aria-label="Menu" aria-controls="mobile-menu" aria-expanded="false"><%- ico("menu") %></button>
     </div>
   </nav>
 </header>
 
 <!-- ===================== MOBILE FULL-SCREEN MENU ===================== -->
-<div id="mobile-menu" class="mobile-menu fixed inset-0 z-[60] bg-white md:hidden hidden" aria-hidden="true">
+<div id="mobile-menu" class="mobile-menu fixed inset-0 z-[60] bg-white lg:hidden hidden" aria-hidden="true">
   <div class="h-16 px-4 flex items-center justify-between border-b border-line">
     <a href="/" class="brand-link" aria-label="Urban Soles home">
       <img class="brand-logo" src="/images/Urban%20Soles_%20Step%20Into%20Style.png" alt="Urban Soles">
@@ -231,7 +231,7 @@
 </aside>
 
 <!-- ===================== MOBILE BOTTOM DOCK ===================== -->
-<nav class="bottom-dock fixed bottom-0 inset-x-0 z-40 md:hidden border-t border-line" aria-label="Quick navigation">
+<nav class="bottom-dock fixed bottom-0 inset-x-0 z-40 lg:hidden border-t border-line" aria-label="Quick navigation">
   <ul class="grid grid-cols-5 text-[11px] font-medium">
     <li><a href="/" class="dock-item"><%- ico("home") %><span>Home</span></a></li>
     <li><button type="button" data-open-menu class="dock-item w-full"><%- ico("grid") %><span>Categories</span></button></li>
@@ -251,4 +251,4 @@
   </ul>
 </nav>
 
-<script src="/js/main.js" defer></script>
+<script type="module" src="/build/assets/navigation.js"></script>
