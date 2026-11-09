@@ -17,5 +17,11 @@
   "bugs": {
     "url": "https://github.com/mishkatnaveed14/Urban-Soles/issues"
   },
-  "homepage": "https://github.com/mishkatnaveed14/Urban-Soles#readme"
+  "homepage": "https://github.com/mishkatnaveed14/Urban-Soles#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "mongoose": "^9.12.0"
+  }
 }
